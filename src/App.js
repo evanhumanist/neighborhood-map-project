@@ -9,12 +9,64 @@ import SearchResults from "./SearchResults"
 
 class App extends Component {
     state = {
-        searchOpen: false
+        searchOpen: false,
+        isMarkerShown: true,
+        restaurantsArray: [
+            {
+                title: 'Cocoron',
+                location: {
+                    lat: 40.720308,
+                    lng: -73.993048
+                },
+                isOpen: false
+            },
+            {
+                title: 'Patacon Pisao',
+                location: {
+                    lat: 40.720393,
+                    lng: -73.9875605
+                },
+                isOpen: false
+            },
+            {
+                title: 'Katz Delicatessen',
+                location: {
+                    lat: 40.722233,
+                    lng: -73.98742899999999
+                },
+                isOpen: true
+            },
+            {
+                title: 'Taim',
+                location: {
+                    lat: 40.722148,
+                    lng: -73.996065
+                },
+                isOpen: false
+            },
+            {
+                title: 'Il Laboratorio Del Gelato',
+                location: {
+                    lat: 40.7222387,
+                    lng: -73.9870811
+                },
+                isOpen: false
+            },
+        ]
     };
 
     openSearch = () => {
         this.setState({ searchOpen: !this.state.searchOpen });
-    }
+        this.setState({ isMarkerShown: true})
+    };
+
+    clickMarker = (index) => {
+        let copyRestaurantsArray = JSON.parse(JSON.stringify(this.state.restaurantsArray));
+        copyRestaurantsArray.map((copyRestaurant, copyIndex) => (
+            index === copyIndex ? copyRestaurant.isOpen = true : copyRestaurant.isOpen = false
+        ));
+        this.setState({ restaurantsArray: copyRestaurantsArray})
+    };
 
     render() {
 
@@ -24,9 +76,13 @@ class App extends Component {
                     <Col className="zero-padding">
                         <AppHeader
                             openSearch={this.openSearch}
-                            searchOpen={this.searchOpen}
+                            searchOpen={this.state.searchOpen}
                         />
-                        <MapContainer />
+                        <MapContainer
+                            isMarkerShown={this.state.isMarkerShown}
+                            restaurantsArray={this.state.restaurantsArray}
+                            clickMarker={this.clickMarker}
+                        />
                     </Col>
                     <Fade in={this.state.searchOpen} mountOnEnter={true} unmountOnExit={true}>
                         <Col dimension="width" className="search-results zero-padding" xs={3}>

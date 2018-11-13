@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-// import Container from 'react-bootstrap/lib/Container';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
 import Button from 'react-bootstrap/lib/Button'
 import Navbar from 'react-bootstrap/lib/Navbar'
 import Nav from 'react-bootstrap/lib/Navbar'
 import NavLink from 'react-bootstrap/lib/NavLink'
-import Fade from 'react-bootstrap/lib/Fade'
-import MapContainer from './MapContainer'
 
 class AppHeader extends Component {
 
