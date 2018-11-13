@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/lib/Button'
 import Navbar from 'react-bootstrap/lib/Navbar'
 import Nav from 'react-bootstrap/lib/Navbar'
 import NavLink from 'react-bootstrap/lib/NavLink'
+import FormControl from 'react-bootstrap/lib/FormControl'
+import Form from 'react-bootstrap/lib/Form'
 
 class AppHeader extends Component {
 
@@ -19,18 +21,16 @@ class AppHeader extends Component {
                     <Nav className="mr-auto">
                         <NavLink href="#home">Home</NavLink>
                         <NavLink href="#link">Link</NavLink>
-                        <Button variant="secondary" className="fas fa-bars"
-                                onClick={() => {
-                                    openSearch();
-                                    console.log(searchOpen);
-                                }}
-                                aria-controls="example-collapse-text"
-                                aria-expanded={searchOpen}/>
                     </Nav>
-                    {/*<Form inline>*/}
-                        {/*<FormControl type="text" placeholder="Search" className="mr-sm-2" />*/}
-                        {/*<Button variant="outline-success">Search</Button>*/}
-                    {/*</Form>*/}
+                    <Form inline>
+                        <FormControl
+                            type="text"
+                            placeholder="Search Restaurants..."
+                            className="mr-sm-2"
+                            value={this.props.query}
+                            onChange={(event) => this.props.updateQuery(event.target.value)}
+                        />
+                    </Form>
                 </Navbar.Collapse>
             </Navbar>
         );

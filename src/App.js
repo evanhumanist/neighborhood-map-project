@@ -11,6 +11,7 @@ class App extends Component {
     state = {
         searchOpen: false,
         isMarkerShown: true,
+        query: '',
         restaurantsArray: [
             {
                 title: 'Cocoron',
@@ -55,17 +56,21 @@ class App extends Component {
         ]
     };
 
-    openSearch = () => {
-        this.setState({ searchOpen: !this.state.searchOpen });
-        this.setState({ isMarkerShown: true})
-    };
-
     clickMarker = (index) => {
         let copyRestaurantsArray = JSON.parse(JSON.stringify(this.state.restaurantsArray));
         copyRestaurantsArray.map((copyRestaurant, copyIndex) => (
             index === copyIndex ? copyRestaurant.isOpen = true : copyRestaurant.isOpen = false
         ));
         this.setState({ restaurantsArray: copyRestaurantsArray})
+    };
+
+    updateQuery = (queryValue) => {
+        this.setState({ query: queryValue });
+        if (queryValue !== '') {
+            this.setState({ searchOpen: true });
+        } else {
+            this.setState({ searchOpen: false });
+        }
     };
 
     render() {
@@ -77,6 +82,8 @@ class App extends Component {
                         <AppHeader
                             openSearch={this.openSearch}
                             searchOpen={this.state.searchOpen}
+                            updateQuery={this.updateQuery}
+                            query={this.state.query}
                         />
                         <MapContainer
                             isMarkerShown={this.state.isMarkerShown}
@@ -86,7 +93,10 @@ class App extends Component {
                     </Col>
                     <Fade in={this.state.searchOpen} mountOnEnter={true} unmountOnExit={true}>
                         <Col dimension="width" className="search-results zero-padding" xs={3}>
-                           <SearchResults />
+                           <SearchResults
+                               restaurantsArray={this.state.restaurantsArray}
+                               query={this.state.query}
+                           />
                         </Col>
                     </Fade>
                 </Row>
