@@ -10,7 +10,7 @@ class SearchResults extends Component {
             this.props.restaurantsArray.filter((restaurant) => (
                 restaurant.title.toUpperCase().includes(this.props.query.toUpperCase())
             )).map((restaurant) => (
-                <ListGroup>
+                <ListGroup key={restaurant.title}>
                     <ListGroup.Item action>{restaurant.title}</ListGroup.Item>
                 </ListGroup>
             ))

@@ -89,6 +89,7 @@ class App extends Component {
                             isMarkerShown={this.state.isMarkerShown}
                             restaurantsArray={this.state.restaurantsArray}
                             clickMarker={this.clickMarker}
+                            query={this.state.query}
                         />
                     </Col>
                     <Fade in={this.state.searchOpen} mountOnEnter={true} unmountOnExit={true}>
@@ -100,7 +101,6 @@ class App extends Component {
                         </Col>
                     </Fade>
                 </Row>
-
             </div>
         );
     }
