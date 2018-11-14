@@ -162,7 +162,7 @@ class App extends Component {
     };
 
     componentDidMount() {
-        // this.fetchFoursquareInfo(this);
+        this.fetchFoursquareInfo(this);
     };
 
     render() {
