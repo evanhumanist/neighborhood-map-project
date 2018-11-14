@@ -20,6 +20,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
         defaultZoom={15}
         defaultCenter={{ lat: 40.718436, lng: -73.9936874 }}
         defaultOptions={{ styles: styles }}
+        role="application"
     >
         { props.restaurantsArray.filter((restaurant) => (
                 props.query ? restaurant.title.toUpperCase().includes(props.query.toUpperCase()) : true

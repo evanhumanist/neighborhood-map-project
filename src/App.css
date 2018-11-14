@@ -16,15 +16,16 @@
 
 .restaurant-title {
     font-weight: bold;
-    font-size: 1.3em;
-    text-align: center;
-}
-
-.restaurant-title a {
-    text-decoration: none;
-    color: darkslategrey;
 }
 
 .image-react {
     width: 100%;
 }
+
+.button-react {
+    border: none;
+    background: none;
+    color: darkslategrey;
+    cursor: pointer;
+}
+

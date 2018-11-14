@@ -80,6 +80,19 @@ class App extends Component {
                 rating: '',
                 placeID: 'ChIJ6yiuIodZwokRoAGoRh5xSlw'
             },
+            {
+                title: 'Doughnut Plant',
+                location: {
+                    lat: 40.71633600000001,
+                    lng: -73.98853000000001
+                },
+                isOpen: false,
+                foursquareID: '',
+                menu: '',
+                price: '',
+                rating: '',
+                placeID: 'ChIJ2SZLBypawokR5g0jFxaMY10'
+            },
         ]
     };
 
@@ -99,9 +112,9 @@ class App extends Component {
     closeMarker = () => {
         let copyRestaurantsArray = JSON.parse(JSON.stringify(this.state.restaurantsArray));
         copyRestaurantsArray.map((copyRestaurant, copyIndex) => (
-            copyRestaurant.isOpen = false,
-            this.setState({ isOpen: false })
+            copyRestaurant.isOpen = false
         ));
+        this.setState({ isOpen: false });
         this.setState({ restaurantsArray: copyRestaurantsArray});
         if (!this.state.query) {
             this.setState({ searchOpen: false})
@@ -128,7 +141,6 @@ class App extends Component {
                 .then(response => {
                     return response.json()
                 }).then(response => {
-                    console.log(response.response.venues[0].id);
                     copyRestaurant.foursquareID = response.response.venues[0].id;
                     return fetch(`https://api.foursquare.com/v2/venues/${copyRestaurant.foursquareID}?client_id=XUJFOXF0RUASI42LLX103ES4KT5HAFOBZH3GC3NFUL22SDRH&client_secret=HRDIPNR3YTDXQQYBQJ0S2ERNUKBQHRWMKWHL3D3BB5AUJRNZ&v=20180323`)
                 }).then(response => {
@@ -137,12 +149,10 @@ class App extends Component {
                 }).catch(response => {
                     console.log(`Missing value for ${copyRestaurant.title}`)
                 }).then(response => {
-                    console.log(response);
                     copyRestaurant.menu = response.response.venue.menu.mobileUrl;
                     copyRestaurant.price = response.response.venue.price.message;
                     copyRestaurant.rating = response.response.venue.rating;
                     copyRestaurant.hours = response.response.venue.hours.timeframes;
-                    console.log(response.response.venue.hours.timeframes)
                 }).catch(response => {
                     console.log(`Missing value for ${copyRestaurant.title}`)
                 })
