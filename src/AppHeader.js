@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from 'react-bootstrap/lib/Navbar'
 import FormControl from 'react-bootstrap/lib/FormControl'
-import Row from 'react-bootstrap/lib/Row'
-import Col from 'react-bootstrap/lib/Col'
 import Form from 'react-bootstrap/lib/Form'
 
 class AppHeader extends Component {
