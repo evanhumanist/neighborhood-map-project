@@ -140,21 +140,24 @@ class App extends Component {
             fetch(`https://api.foursquare.com/v2/venues/search?client_id=XUJFOXF0RUASI42LLX103ES4KT5HAFOBZH3GC3NFUL22SDRH&client_secret=HRDIPNR3YTDXQQYBQJ0S2ERNUKBQHRWMKWHL3D3BB5AUJRNZ&name=${copyRestaurant.title}&v=20180323&ll=${copyRestaurant.location.lat},${copyRestaurant.location.lng}&intent=match`)
                 .then(response => {
                     return response.json()
+                }).catch(response => {
+                    alert('Unable to reach Foursquare API')
                 }).then(response => {
                     copyRestaurant.foursquareID = response.response.venues[0].id;
                     return fetch(`https://api.foursquare.com/v2/venues/${copyRestaurant.foursquareID}?client_id=XUJFOXF0RUASI42LLX103ES4KT5HAFOBZH3GC3NFUL22SDRH&client_secret=HRDIPNR3YTDXQQYBQJ0S2ERNUKBQHRWMKWHL3D3BB5AUJRNZ&v=20180323`)
+                }).catch(response => {
+                    alert('Unable to reach Foursquare API')
                 }).then(response => {
-                    // copyRestaurant.menu = response.response.venues[0].id;
                     return response.json()
                 }).catch(response => {
-                    console.log(`Missing value for ${copyRestaurant.title}`)
+                    alert(`Missing value for ${copyRestaurant.title}`)
                 }).then(response => {
                     copyRestaurant.menu = response.response.venue.menu.mobileUrl;
                     copyRestaurant.price = response.response.venue.price.message;
                     copyRestaurant.rating = response.response.venue.rating;
                     copyRestaurant.hours = response.response.venue.hours.timeframes;
                 }).catch(response => {
-                    console.log(`Missing value for ${copyRestaurant.title}`)
+                    alert(`Missing value for ${copyRestaurant.title}`)
                 })
         )).then(
             thisComponent.setState({ restaurantsArray: copyRestaurantsArray })
@@ -186,7 +189,7 @@ class App extends Component {
                         />
                     </Col>
                     <Fade in={this.state.searchOpen} mountOnEnter={true} unmountOnExit={true}>
-                        <Col dimension="width" className="search-results zero-padding" xs={3}>
+                        <Col dimension="width" className="search-results zero-padding" xs={12} md={3}>
                            <SearchResults
                                restaurantsArray={this.state.restaurantsArray}
                                query={this.state.query}

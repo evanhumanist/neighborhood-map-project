@@ -1,44 +1,28 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Neighborhood Map Project
+This is the 7th and final project in the Udacity/Google Frontend Nanodegree course. I was lucky enough to be one of the recipients of a scholarship for this course and I'm incredibly grateful for this!
 
-## Available Scripts
+## Dependencies
+1. A modern Web Browser (Vivaldi, Chrome, Opera, Firefox, Safari, Edge etc...).
+2. npm must be installed.
 
-In the project directory, you can run:
+## Clone
+Clone this repo to your local machine using:
 
-### `npm start`
+`https://github.com/evanhumanist/neighborhood-map-project`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Running Locally
+1. Install all project dependencies with `npm install`
+2. Start the development server with `npm start`
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Instructions
+* The Homepage will load all locations by default.
+* Click on a location to bring up details in the side pane.
+* Alternatively, search for a location in the search box, which will bring up the side pane.
+    * You can then click a location in the side pane and additional information will be revealed about that location, and the map marker will present itself.
+ 
+## Service Worker
+This project features a Service Worker. Please note that this service worker is only functional in the Production environment. To create a Production build run the following: 
+`npm run build`
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contributing
+Feel free to offer suggestions, but no contributing is allowed at the moment.
