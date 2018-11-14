@@ -18,7 +18,13 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
                 onClick={() => props.clickMarker(index)}
             >
                 {restaurant.isOpen && <InfoWindow>
-                    <span>{restaurant.title}</span>
+                    <div>
+                        <span>{restaurant.title}</span>
+                        <span>{restaurant.foursquareID}</span>
+                        <span>{restaurant.menu}</span>
+                        <span>{restaurant.price}</span>
+                        <span>{restaurant.rating}</span>
+                    </div>
                 </InfoWindow>}
             </Marker>
         )) }
