@@ -13,3 +13,18 @@
 .fa-utensils {
     color: #fff;
 }
+
+.restaurant-title {
+    font-weight: bold;
+    font-size: 1.3em;
+    text-align: center;
+}
+
+.restaurant-title a {
+    text-decoration: none;
+    color: darkslategrey;
+}
+
+.image-react {
+    width: 100%;
+}

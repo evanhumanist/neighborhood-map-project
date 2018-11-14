@@ -11,6 +11,7 @@ class App extends Component {
     state = {
         searchOpen: false,
         isMarkerShown: true,
+        isOpen: false,
         query: '',
         restaurantsArray: [
             {
@@ -23,7 +24,8 @@ class App extends Component {
                 foursquareID: '',
                 menu: '',
                 price: '',
-                rating: ''
+                rating: '',
+                placeID: 'ChIJEcv_vYhZwokRzaEJ5tBS4ZI'
             },
             {
                 title: 'Patacon Pisao',
@@ -35,7 +37,9 @@ class App extends Component {
                 foursquareID: '',
                 menu: '',
                 price: '',
-                rating: ''
+                rating: '',
+                placeID: 'ChIJK75uQoFZwokRzmLthPu_ZS4'
+
             },
             {
                 title: 'Katz Delicatessen',
@@ -47,7 +51,8 @@ class App extends Component {
                 foursquareID: '',
                 menu: '',
                 price: '',
-                rating: ''
+                rating: '',
+                placeID: 'ChIJCar0f49ZwokR6ozLV-dHNTE'
             },
             {
                 title: 'Taïm',
@@ -59,7 +64,8 @@ class App extends Component {
                 foursquareID: '',
                 menu: '',
                 price: '',
-                rating: ''
+                rating: '',
+                placeID: 'ChIJ4Us1t4hZwokRGsBUjumzejE'
             },
             {
                 title: 'Il Laboratorio Del Gelato',
@@ -71,38 +77,60 @@ class App extends Component {
                 foursquareID: '',
                 menu: '',
                 price: '',
-                rating: ''
+                rating: '',
+                placeID: 'ChIJ6yiuIodZwokRoAGoRh5xSlw'
             },
         ]
     };
 
     clickMarker = (index) => {
         let copyRestaurantsArray = JSON.parse(JSON.stringify(this.state.restaurantsArray));
+        let queryValue = null;
         copyRestaurantsArray.map((copyRestaurant, copyIndex) => (
-            index === copyIndex ? copyRestaurant.isOpen = true : copyRestaurant.isOpen = false
+            index === copyIndex ? (copyRestaurant.isOpen = true, queryValue = true) : copyRestaurant.isOpen = false
         ));
-        this.setState({ restaurantsArray: copyRestaurantsArray})
+        this.setState({ restaurantsArray: copyRestaurantsArray});
+        this.setState({ isOpen: true});
+        if (queryValue === true) {
+            this.setState({ searchOpen: true})
+        }
+    };
+
+    closeMarker = () => {
+        let copyRestaurantsArray = JSON.parse(JSON.stringify(this.state.restaurantsArray));
+        copyRestaurantsArray.map((copyRestaurant, copyIndex) => (
+            copyRestaurant.isOpen = false,
+            this.setState({ isOpen: false })
+        ));
+        this.setState({ restaurantsArray: copyRestaurantsArray});
+        if (!this.state.query) {
+            this.setState({ searchOpen: false})
+        }
     };
 
     updateQuery = (queryValue) => {
         this.setState({ query: queryValue });
-        if (queryValue !== '') {
+        if (queryValue !== '' || this.state.isOpen) {
             this.setState({ searchOpen: true });
         } else {
             this.setState({ searchOpen: false });
         }
     };
 
+    handleClick = (index) => {
+        this.clickMarker(index)
+    };
+
     fetchFoursquareInfo = (thisComponent) => {
         let copyRestaurantsArray = JSON.parse(JSON.stringify(this.state.restaurantsArray));
         Promise.all(copyRestaurantsArray.map(copyRestaurant =>
-            fetch(`https://api.foursquare.com/v2/venues/search?client_id=33F5SPUB3QKZRIW02J1Z2QYSX3FGPMDO5UOVGIJHUSR4WIHR&client_secret=K2O5OJ5ZRJWFL3RV00G1QHFJZMHF4XAHGFF534IPBFIKDUJI&name=${copyRestaurant.title}&v=20180323&ll=${copyRestaurant.location.lat},${copyRestaurant.location.lng}&intent=match`)
+            fetch(`https://api.foursquare.com/v2/venues/search?client_id=XUJFOXF0RUASI42LLX103ES4KT5HAFOBZH3GC3NFUL22SDRH&client_secret=HRDIPNR3YTDXQQYBQJ0S2ERNUKBQHRWMKWHL3D3BB5AUJRNZ&name=${copyRestaurant.title}&v=20180323&ll=${copyRestaurant.location.lat},${copyRestaurant.location.lng}&intent=match`)
                 .then(response => {
                     return response.json()
                 }).then(response => {
                     console.log(response.response.venues[0].id);
                     copyRestaurant.foursquareID = response.response.venues[0].id;
-                    return fetch(`https://api.foursquare.com/v2/venues/${copyRestaurant.foursquareID}?client_id=33F5SPUB3QKZRIW02J1Z2QYSX3FGPMDO5UOVGIJHUSR4WIHR&client_secret=K2O5OJ5ZRJWFL3RV00G1QHFJZMHF4XAHGFF534IPBFIKDUJI&v=20180323`)
+                    return fetch(`https://api.foursquare.com/v2/venues/${copyRestaurant.foursquareID}?client_id=XUJFOXF0RUASI42LLX103ES4KT5HAFOBZH3GC3NFUL22SDRH&client_secret=HRDIPNR3YTDXQQYBQJ0S2ERNUKBQHRWMKWHL3D3BB5AUJRNZ&v=20180323`)
                 }).then(response => {
                     // copyRestaurant.menu = response.response.venues[0].id;
                     return response.json()
@@ -113,46 +141,18 @@ class App extends Component {
                     copyRestaurant.menu = response.response.venue.menu.mobileUrl;
                     copyRestaurant.price = response.response.venue.price.message;
                     copyRestaurant.rating = response.response.venue.rating;
+                    copyRestaurant.hours = response.response.venue.hours.timeframes;
+                    console.log(response.response.venue.hours.timeframes)
                 }).catch(response => {
                     console.log(`Missing value for ${copyRestaurant.title}`)
                 })
         )).then(
             thisComponent.setState({ restaurantsArray: copyRestaurantsArray })
         );
-
-            // ).then(restaurants => {
-            //     console.log(restaurants)
-            // });
-            //     return(response.json())
-            // }).then(function(responseJSON) {
-            //     copyRestaurant.foursquareID = responseJSON.response.venues[0].id;
-            //     console.log(responseJSON.response.venues[0].id);
-            //     // return fetch(`https://api.foursquare.com/v2/venues/${copyRestaurant.foursquareID}?client_id=33F5SPUB3QKZRIW02J1Z2QYSX3FGPMDO5UOVGIJHUSR4WIHR&client_secret=K2O5OJ5ZRJWFL3RV00G1QHFJZMHF4XAHGFF534IPBFIKDUJI&v=20180323`)
-            // })
-            // //     .then(function(response) {
-            //     return(response.json())
-            // }).then(function(responseJSON) {
-            //     // copyRestaurant.foursquareID = responseJSON.response.venues[0].id;
-            //     console.log(responseJSON.response);
-            //     //     .catch(function(error) {
-            //     //     console.log(`warning, no id found for ${copyRestaurant.title}`)
-            //     // })
-            // })
-        // Promise.all(requests)
-        //     .then(responses =>
-        //         console.log(responses)
-        //     )
-        //     .then((copyRestaurantsArray) => {
-        //     console.log(copyRestaurantsArray);
-        //     // this.setState({ restaurantsArray: copyRestaurantsArray });
-        //     // return copyRestaurantsArray
-        // })
-        //
-        // console.log('hello')
     };
 
     componentDidMount() {
-        this.fetchFoursquareInfo(this)
+        // this.fetchFoursquareInfo(this);
     };
 
     render() {
@@ -172,6 +172,7 @@ class App extends Component {
                             restaurantsArray={this.state.restaurantsArray}
                             clickMarker={this.clickMarker}
                             query={this.state.query}
+                            closeMarker={this.closeMarker}
                         />
                     </Col>
                     <Fade in={this.state.searchOpen} mountOnEnter={true} unmountOnExit={true}>
@@ -179,6 +180,7 @@ class App extends Component {
                            <SearchResults
                                restaurantsArray={this.state.restaurantsArray}
                                query={this.state.query}
+                               handleClick={this.handleClick}
                            />
                         </Col>
                     </Fade>
